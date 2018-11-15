@@ -21,13 +21,17 @@ export default class TokenSelector extends Component {
 						</span>
 						0x
 					</label>
-					<label className="panel-block is-active">
-						<input type="checkbox" />
-						<span className="panel-icon">
-							<i className="fas fa-book" aria-hidden="true" />
-						</span>
-						OMG
-					</label>
+					{this.props.tokens.map(token => {
+						return (
+							<label className="panel-block is-active" key={token.symbol}>
+								<input type="checkbox" />
+								<span className="panel-icon">
+									<i className="fas fa-book" aria-hidden="true" />
+								</span>
+								{token.symbol}
+							</label>
+						);
+					})}
 				</nav>
 			</div>
 		);
