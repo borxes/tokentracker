@@ -1,4 +1,4 @@
-The web app is deployed on [Netlify[(https://tender-murdock-aa8081.netlify.com).
+The web app is deployed on [Netlify](https://tender-murdock-aa8081.netlify.com).
 
 
 ------
