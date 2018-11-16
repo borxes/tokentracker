@@ -47,7 +47,7 @@ class App extends Component {
 
 		// obtain the list of top token from ethplorer.io
 		fetch(
-			`http://api.ethplorer.io/getTop?apiKey=freekey&criteria=cap&limit=${TOKENLIMIT}`
+			`https://api.ethplorer.io/getTop?apiKey=freekey&criteria=cap&limit=${TOKENLIMIT}`
 		)
 			.then(response => response.json())
 			.then(json => {
