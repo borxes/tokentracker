@@ -9,7 +9,7 @@ export default class TokenEvent extends Component {
 	state = { tokenSymbol: '' };
 
 	async componentDidMount() {
-		let request = `http://api.ethplorer.io/getTokenInfo/${
+		let request = `https://api.ethplorer.io/getTokenInfo/${
 			this.props.token
 		}?apiKey=freekey`;
 		const response = await fetch(request);
