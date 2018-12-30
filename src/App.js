@@ -10,6 +10,7 @@ import { blockDateTime } from './components/helpers';
 
 // number of tokens available for tracking
 const TOKENLIMIT = 10;
+const ETHPLORER_API_URL = 'https://api.ethplorer.io';
 
 class App extends Component {
 	blockTimes = new Map(); //block number to timestamp mapping
@@ -47,7 +48,7 @@ class App extends Component {
 
 		// obtain the list of top token from ethplorer.io
 		fetch(
-			`https://api.ethplorer.io/getTop?apiKey=freekey&criteria=cap&limit=${TOKENLIMIT}`
+			`${ETHPLORER_API_URL}/getTop?apiKey=freekey&criteria=cap&limit=${TOKENLIMIT}`
 		)
 			.then(response => response.json())
 			.then(json => {

@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
-import { createEtherscanLink, displayTokenValue } from './helpers';
+import {
+	createEtherscanLink,
+	displayTokenValue,
+	tokenAddressToName
+} from './helpers';
 
 export default class TokenEvent extends Component {
+	state = { tokenSymbol: '' };
+
+	async componentDidMount() {
+		let request = `http://api.ethplorer.io/getTokenInfo/${
+			this.props.token
+		}?apiKey=freekey`;
+		const response = await fetch(request);
+		const json = await response.json();
+		this.setState({
+			tokenSymbol: json.symbol
+		});
+	}
+
 	render() {
 		return (
 			<tr>
-				<td>{this.props.token}</td>
+				<td>{this.state.tokenSymbol}</td>
 				<td>{this.props.event}</td>
 				<td>{createEtherscanLink(this.props.transactionHash)}</td>
 				<td>

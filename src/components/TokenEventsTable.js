@@ -49,6 +49,11 @@ export default class TokenEventsTable extends Component {
 						this.setState({
 							transactions: [event, ...this.state.transactions]
 						});
+
+						//DEBUG
+						//console.log(`new Transaction Detected: ${JSON.stringify(event)}`);
+						//DEBUG
+
 						// save the first 10 transactions into local storage for debug purposes
 						if (this.state.transactions.length <= 10) {
 							localStorage.setItem(
@@ -94,7 +99,7 @@ export default class TokenEventsTable extends Component {
 										from={transaction.returnValues._from}
 										to={transaction.returnValues._to}
 										value={transaction.returnValues._value}
-										token={'token'}
+										token={transaction.address}
 										block={transaction.blockNumber}
 										timestamp={this.props.getBlockTime(transaction.blockNumber)}
 									/>
