@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class TokenSelector extends Component {
-	state = {
-		tokens: []
-	};
+import { fetchTopTokens } from '../actions';
 
+class TokenSelector extends Component {
 	componentDidMount() {
-		return;
+		this.props.dispatch(fetchTopTokens());
 	}
 
 	render() {
@@ -14,13 +13,6 @@ export default class TokenSelector extends Component {
 			<div className="token-selector">
 				<nav className="panel">
 					<p className="panel-heading">Top 10 Tokens</p>
-					<label className="panel-block is-active">
-						<input type="checkbox" />
-						<span className="panel-icon">
-							<i className="fas fa-book" aria-hidden="true" />
-						</span>
-						0x
-					</label>
 					{this.props.tokens.map(token => {
 						return (
 							<label className="panel-block is-active" key={token.symbol}>
@@ -37,3 +29,11 @@ export default class TokenSelector extends Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+		tokens: state.tokens
+	};
+}
+
+export default connect(mapStateToProps)(TokenSelector);

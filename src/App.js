@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
 import TokenEventsTable from './components/TokenEventsTable';
 import TokenSelector from './components/TokenSelector';
 import TokenStatus from './components/TokenStatus';
-import web3 from './web3';
-import { blockDateTime } from './components/helpers';
 
-// number of tokens available for tracking
-const TOKENLIMIT = 10;
-const ETHPLORER_API_URL = 'https://api.ethplorer.io';
+//import web3 from './web3';
+//import { blockDateTime } from './components/helpers';
 
 class App extends Component {
-	blockTimes = new Map(); //block number to timestamp mapping
-	blockSubscription = null;
+	//blockTimes = new Map(); //block number to timestamp mapping
+	//blockSubscription = null;
 
 	state = {
-		currentBlock: 0,
+		//currentBlock: 0,
 		status: '',
 		topTokens: []
 	};
@@ -25,7 +21,8 @@ class App extends Component {
 	componentDidMount() {
 		// listen to all new blocks in order to obtain timestamps
 		// theoretically we can analyze each block and extract token events from it
-		this.blockSubscription = web3.eth
+		/*
+    this.blockSubscription = web3.eth
 			.subscribe('newBlockHeaders', function(error, result) {
 				if (error) {
 					console.error(error);
@@ -44,10 +41,11 @@ class App extends Component {
 					});
 				}
 			})
-			.on('error', console.error);
-
+      .on('error', console.error);
+    */
 		// obtain the list of top token from ethplorer.io
-		fetch(
+		/*
+    fetch(
 			`${ETHPLORER_API_URL}/getTop?apiKey=freekey&criteria=cap&limit=${TOKENLIMIT}`
 		)
 			.then(response => response.json())
@@ -62,30 +60,36 @@ class App extends Component {
 							.join(' '),
 					topTokens: tokens
 				});
-			});
+      });
+    */
+
+		return;
 	}
 
 	componentWillUnmount() {
-		this.blockSubscription.unsubscribe();
+		//this.blockSubscription.unsubscribe();
 	}
 
 	getBlockTime = block => {
 		//console.log(`getBlockTime called block=${block}`);
-		if (this.blockTimes.has(block)) {
+		/*
+    if (this.blockTimes.has(block)) {
 			let timeStr = blockDateTime(this.blockTimes.get(block));
 			return timeStr;
-		}
+    }
+    */
+		return 'use the Date class';
 	};
 
 	render() {
 		return (
 			<div className="container is-fluid">
-				<div className="notification is-info tokenStatus">
+				<div className="notification is-info">
 					<TokenStatus status={this.state.status} />
 				</div>
 				<div className="columns">
 					<div className="column is-one-quarter">
-						<TokenSelector tokens={this.state.topTokens} />
+						<TokenSelector />
 					</div>
 					<div className="column is-three-quarters">
 						<TokenEventsTable getBlockTime={this.getBlockTime} />

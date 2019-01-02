@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import {
-	createEtherscanLink,
-	displayTokenValue,
-	tokenAddressToName
-} from './helpers';
+import { createEtherscanLink, displayTokenValue } from './helpers';
 
 export default class TokenEvent extends Component {
 	state = { tokenSymbol: '' };
 
 	async componentDidMount() {
-		let request = `https://api.ethplorer.io/getTokenInfo/${
+		// bad code because it queries the API for each token event instead of caching
+
+		/*let request = `https://api.ethplorer.io/getTokenInfo/${
 			this.props.token
 		}?apiKey=freekey`;
 		const response = await fetch(request);
 		const json = await response.json();
 		this.setState({
 			tokenSymbol: json.symbol
-		});
+    });*/
+		return;
 	}
 
 	render() {
