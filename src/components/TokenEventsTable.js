@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TokenEvent from './TokenEvent';
-import zrxABI from '../abi/0xapi.js';
+import erc20ABI from '../abi/erc20ABI.js';
 
 import web3 from '../web3';
 
@@ -19,7 +19,7 @@ export default class TokenEventsTable extends Component {
 
 	componentDidMount() {
 		//console.log(JSON.stringify(web3));
-		const zrx = JSON.parse(zrxABI.result);
+		const zrx = erc20ABI;
 		//console.log(JSON.stringify(zrx));
 		const zrxToken = new web3.eth.Contract(zrx, ZRX_ADDR);
 		// zrxToken.methods

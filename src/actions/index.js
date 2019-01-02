@@ -20,6 +20,8 @@ export const REMOVE_SUB = 'REMOVE_SUB';
 // add new transaction
 export const ADD_TRANSACTION = 'ADD_TRANSACTION';
 
+export const SET_STATUS = 'SET_STATUS';
+
 ////////////////////
 // Action creators
 ////////////////////
@@ -41,6 +43,11 @@ export const fetchTopTokens = () => async dispatch => {
 		type: ADD_TOKENS,
 		payload: response.data.tokens.slice(1) // we ignore the first token which is always ETH
 	});
+
+	dispatch({
+		type: SET_STATUS,
+		payload: 'Top 10 tokens retrieved'
+	});
 };
 
 export function addSub(token) {
@@ -61,5 +68,12 @@ export function addTransaction(transaction) {
 	return {
 		type: ADD_TRANSACTION,
 		payload: transaction
+	};
+}
+
+export function setStatus(status) {
+	return {
+		type: SET_STATUS,
+		payload: status
 	};
 }
