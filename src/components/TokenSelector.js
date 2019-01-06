@@ -28,12 +28,26 @@ class TokenSelector extends Component {
 				? addSub(id, this.props.tokens)
 				: removeSub(id, this.props.tokens)
 		);
-		/* localStorage is buggy atm
-    localStorage.setItem(
-			LOCAL_SUB_KEY,
-			JSON.stringify(this.props.subscriptions.map(sub => sub.token))
-    );
-    */
+	};
+
+	checkAll = event => {
+		let currentlyChecked = this.state.checked;
+		this.props.tokens.forEach(token => {
+			currentlyChecked[token.symbol] = true;
+			this.props.dispatch(addSub(token.symbol, this.props.tokens));
+		});
+		this.setState({ checked: currentlyChecked });
+		this.props.dispatch(setStatus(`Subscribing to all tokens`));
+	};
+
+	unCheckAll = event => {
+		let currentlyChecked = this.state.checked;
+		this.props.tokens.forEach(token => {
+			currentlyChecked[token.symbol] = false;
+			this.props.dispatch(removeSub(token.symbol, this.props.tokens));
+		});
+		this.setState({ checked: currentlyChecked });
+		this.props.dispatch(setStatus(`Unsubscribing from all tokens`));
 	};
 
 	async componentDidMount() {
@@ -44,22 +58,13 @@ class TokenSelector extends Component {
 			token => (tokensChecked[token.symbol] = token.subscribed) // thank you eslint
 		);
 		this.setState({ checked: tokensChecked });
-		/* local Storage has a nasty bug atm (multiplying subs)
-    const localSubs = JSON.parse(localStorage.getItem(LOCAL_SUB_KEY));
-		if (localSubs) {
-			localSubs.forEach(sub => {
-				//console.log('component mounting, trying to sub to ', sub);
-				this.props.dispatch(addSub(sub, this.props.tokens));
-			});
-    }
-    */
 	}
 
 	render() {
 		return (
 			<div className="token-selector">
 				<nav className="panel">
-					<p className="panel-heading">Top 10 Tokens</p>
+					<p className="panel-heading">Top 10 ERC20 tokens by market cap</p>
 					{this.props.tokens.map(token => {
 						return (
 							<label className="panel-block is-active" key={token.symbol}>
@@ -76,6 +81,20 @@ class TokenSelector extends Component {
 							</label>
 						);
 					})}
+					<div className="panel-block">
+						<a
+							className="button is-link is-outlined is-fullwidth"
+							onClick={this.checkAll}
+						>
+							Check All
+						</a>
+						<a
+							className="button is-link is-outlined is-fullwidth"
+							onClick={this.unCheckAll}
+						>
+							Uncheck All
+						</a>
+					</div>
 				</nav>
 			</div>
 		);
