@@ -57,10 +57,10 @@ export const fetchTopTokens = () => async dispatch => {
 // we subscribe to tokenSymbol and retrieve token's info from tokenState
 export const addSub = (tokenSymbol, tokenState) => dispatch => {
 	const token = tokenState.find(elem => elem.symbol === tokenSymbol);
-	console.log(`addSub token=${token} subscribed=${token.subscribed}`);
+	console.log(`addSub token=${token.symbol} subscribed=${!!token.subscribed}`);
 	if (token && !token.subscribed) {
 		const tokenContract = new web3.eth.Contract(erc20ABI, token.address);
-		console.log(`subscribing to ${token}`);
+		console.log(`subscribing to ${token.symbol}`);
 		const sub = tokenContract.events.allEvents((error, event) => {
 			if (event) {
 				event.tokenSymbol = tokenSymbol;
@@ -90,16 +90,18 @@ export const addSub = (tokenSymbol, tokenState) => dispatch => {
 
 export const removeSub = (tokenSymbol, tokenState) => dispatch => {
 	const token = tokenState.find(elem => elem.symbol === tokenSymbol);
-	console.log(`removeSub token=${token} subscribed=${token.subscribed}`);
+	console.log(
+		`removeSub token=${token.symbol} subscribed=${!!token.subscribed}`
+	);
 	if (token && token.subscribed) {
 		const sub = token.subscription;
 		if (!sub) {
-			console.log(`removeSub token=${token} couldn't find subscription`);
+			//console.log(`removeSub token=${token} couldn't find subscription`);
 			return;
 		} else {
 			sub.unsubscribe((error, success) => {
 				if (success) {
-					console.log(`unsubscribed from ${token}`);
+					console.log(`unsubscribed from ${token.symbol}`);
 					return {
 						type: REMOVE_SUB,
 						payload: token

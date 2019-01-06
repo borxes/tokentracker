@@ -10,12 +10,13 @@ import {
 } from '../actions';
 
 function tokens(state = [], action) {
+	let tokens = state;
+
 	switch (action.type) {
 		case ADD_TOKENS:
 			return state.concat(action.payload);
 
 		case ADD_SUB:
-			let tokens = state;
 			let tokenIndex = tokens.findIndex(
 				token => token.symbol === action.payload.token
 			);
@@ -27,7 +28,6 @@ function tokens(state = [], action) {
 			} else return state; // cannot subscribe to a token that we don't have in the list
 
 		case REMOVE_SUB:
-			tokens = state;
 			tokenIndex = tokens.findIndex(
 				token => token.symbol === action.payload.token
 			);
@@ -51,14 +51,15 @@ function transactions(state = [], action) {
 				`searching for transaction hash ${action.payload.transactionHash}...`
 			);
 			let transactionIndex = state.find(
-				transaction => transaction.hash === action.payload.transactionHash
+				transaction =>
+					transaction.transactionHash === action.payload.transactionHash
 			);
 			console.log(
 				`found transaction has ${
 					action.payload.transactionHash
 				} at index ${transactionIndex}`
 			);
-
+			// add it only if it's unique
 			return transactionIndex === undefined
 				? [action.payload].concat(state)
 				: state;
@@ -67,23 +68,6 @@ function transactions(state = [], action) {
 			return state;
 	}
 }
-
-//function subscriptions - fix to object
-/* subscriptions moved to tokens reducer
-function subscriptions(state = [], action) {
-	switch (action.type) {
-		case ADD_SUB:
-			let subIndex = state.map(sub => sub.token).indexOf(action.payload.token);
-			// only add one subscription per token, but this also should be enforced by the action
-			if (subIndex === -1) return state.concat(action.payload);
-			else return state;
-		case REMOVE_SUB:
-			return state.filter(sub => sub !== action.payload);
-		default:
-			return state;
-	}
-}
-*/
 
 function status(state = [], action) {
 	switch (action.type) {

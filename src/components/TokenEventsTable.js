@@ -31,6 +31,7 @@ class TokenEventsTable extends Component {
 										transaction={transaction}
 										key={transaction.transactionHash}
 										tokenRate={token.price.rate}
+										decimals={token.decimals}
 									/>
 								);
 							})
