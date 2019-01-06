@@ -9,63 +9,6 @@ import TokenStatus from './components/TokenStatus';
 //import { blockDateTime } from './components/helpers';
 
 class App extends Component {
-	//blockTimes = new Map(); //block number to timestamp mapping
-	//blockSubscription = null;
-
-	state = {
-		//currentBlock: 0,
-		status: '',
-		topTokens: []
-	};
-
-	componentDidMount() {
-		// listen to all new blocks in order to obtain timestamps
-		// theoretically we can analyze each block and extract token events from it
-		/*
-    this.blockSubscription = web3.eth
-			.subscribe('newBlockHeaders', function(error, result) {
-				if (error) {
-					console.error(error);
-				}
-			})
-			.on('data', blockHeader => {
-				if (blockHeader.number) {
-					this.setState({
-						status: `adding block ${blockHeader.number} timestamp=${
-							blockHeader.timestamp
-						}`
-					});
-					this.blockTimes.set(blockHeader.number, blockHeader.timestamp);
-					this.setState({
-						currentBlock: blockHeader.number
-					});
-				}
-			})
-      .on('error', console.error);
-    */
-		// obtain the list of top token from ethplorer.io
-		/*
-    fetch(
-			`${ETHPLORER_API_URL}/getTop?apiKey=freekey&criteria=cap&limit=${TOKENLIMIT}`
-		)
-			.then(response => response.json())
-			.then(json => {
-				let tokens = json.tokens.slice(1); // ignore ETH as the first returned result
-				this.setState({
-					status:
-						'Retrieved the list of top ERC20 tokens by market cap: ' +
-						tokens
-							.slice(1)
-							.map(token => token.symbol)
-							.join(' '),
-					topTokens: tokens
-				});
-      });
-    */
-
-		return;
-	}
-
 	componentWillUnmount() {
 		//this.blockSubscription.unsubscribe();
 	}
@@ -85,7 +28,7 @@ class App extends Component {
 		return (
 			<div className="container is-fluid">
 				<div className="notification is-info">
-					<TokenStatus status={this.state.status} />
+					<TokenStatus />
 				</div>
 				<div className="columns">
 					<div className="column is-one-quarter">

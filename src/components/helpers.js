@@ -13,6 +13,7 @@ export function createEtherscanLink(transactionHash) {
 
 // convert the token value from web3.js into a normalized form
 export function displayTokenValue(value, decimals = 18) {
+	//console.log('tokenValue: ', value);
 	return Number((value / Math.pow(10, decimals)).toFixed(3));
 }
 
