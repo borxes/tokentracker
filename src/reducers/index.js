@@ -6,7 +6,8 @@ import {
 	ADD_TRANSACTION,
 	ADD_SUB,
 	REMOVE_SUB,
-	SET_STATUS
+	SET_STATUS,
+	SET_MIN_VAL
 } from '../actions';
 
 function tokens(state = [], action) {
@@ -47,9 +48,6 @@ function transactions(state = [], action) {
 	switch (action.type) {
 		case ADD_TRANSACTION:
 			// only add unique transactions
-			console.log(
-				`searching for transaction hash ${action.payload.transactionHash}...`
-			);
 			let transactionIndex = state.find(
 				transaction =>
 					transaction.transactionHash === action.payload.transactionHash
@@ -78,10 +76,20 @@ function status(state = [], action) {
 	}
 }
 
+function settings(state = { minDisplayValue: 0 }, action) {
+	switch (action.type) {
+		case SET_MIN_VAL:
+			return { ...state, minDisplayValue: action.payload };
+		default:
+			return state;
+	}
+}
+
 const rootReducer = combineReducers({
 	tokens,
 	transactions,
-	status
+	status,
+	settings
 });
 
 export default rootReducer;

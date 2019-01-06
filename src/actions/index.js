@@ -25,6 +25,9 @@ export const ADD_TRANSACTION = 'ADD_TRANSACTION';
 
 export const SET_STATUS = 'SET_STATUS';
 
+// set minimum USD value for a transaction to be displayed
+export const SET_MIN_VAL = 'SET_MIN_VAL';
+
 ////////////////////
 // Action creators
 ////////////////////
@@ -129,5 +132,12 @@ export function setStatus(status) {
 	return {
 		type: SET_STATUS,
 		payload: status
+	};
+}
+
+export function setMinValue(value) {
+	return {
+		type: SET_MIN_VAL,
+		payload: value
 	};
 }

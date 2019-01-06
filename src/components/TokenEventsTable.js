@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TokenEvent from './TokenEvent';
+import { displayTokenValue } from './helpers';
 
 class TokenEventsTable extends Component {
 	render() {
@@ -26,13 +27,20 @@ class TokenEventsTable extends Component {
 								const token = this.props.tokens.find(
 									token => token.symbol === transaction.tokenSymbol
 								);
+								const tokenAmount = displayTokenValue(
+									transaction.returnValues.value,
+									token.decimals
+								);
+								const usdValue = token.price.rate * tokenAmount;
 								return (
-									<TokenEvent
-										transaction={transaction}
-										key={transaction.transactionHash}
-										tokenRate={token.price.rate}
-										decimals={token.decimals}
-									/>
+									usdValue >= this.props.minDisplayValue && (
+										<TokenEvent
+											transaction={transaction}
+											key={transaction.transactionHash}
+											usdValue={usdValue.toFixed(2)}
+											tokenAmount={tokenAmount}
+										/>
+									)
 								);
 							})
 						) : (
@@ -50,7 +58,8 @@ class TokenEventsTable extends Component {
 function mapStateToProps(state) {
 	return {
 		tokens: state.tokens,
-		transactions: state.transactions
+		transactions: state.transactions,
+		minDisplayValue: state.settings.minDisplayValue
 	};
 }
 

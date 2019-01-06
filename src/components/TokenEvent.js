@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { createEtherscanLink, displayTokenValue } from './helpers';
+import { createEtherscanLink } from './helpers';
 
 export default class TokenEvent extends Component {
 	render() {
 		const transaction = this.props.transaction;
-		const tokenAmount = displayTokenValue(
-			transaction.returnValues.value,
-			this.props.decimals
-		);
 		return (
 			<tr>
 				<td>{transaction.tokenSymbol}</td>
@@ -25,8 +21,8 @@ export default class TokenEvent extends Component {
 						: ''}
 					...
 				</td>
-				<td>{tokenAmount}</td>
-				<td>${(tokenAmount * this.props.tokenRate).toFixed(2)}</td>
+				<td>{this.props.tokenAmount}</td>
+				<td>${this.props.usdValue}</td>
 				<td>
 					<a href={`https://etherscan.io/block/${transaction.blockNumber}`}>
 						{transaction.blockNumber}

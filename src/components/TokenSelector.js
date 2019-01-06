@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Slider from 'rc-slider/';
+import Tooltip from 'rc-tooltip';
+import 'rc-slider/assets/index.css';
 
 import {
 	fetchTopTokens,
 	setStatus,
 	addSub,
-	removeSub
-	//LOCAL_SUB_KEY
+	removeSub,
+	setMinValue
 } from '../actions';
+
+const Handle = Slider.Handle;
+const handle = props => {
+	const { value, dragging, index, ...restProps } = props;
+	return (
+		<Tooltip
+			prefixCls="rc-slider-tooltip"
+			overlay={'$' + value}
+			visible={dragging}
+			placement="top"
+			key={index}
+		>
+			<Handle value={value} {...restProps} />
+		</Tooltip>
+	);
+};
 
 class TokenSelector extends Component {
 	// keep local state for checkboxes
 	state = {
-		checked: {}
+		checked: {},
+		minValue: 0
 	}; // token: checked
 
 	handleClick = event => {
@@ -50,6 +70,12 @@ class TokenSelector extends Component {
 		this.props.dispatch(setStatus(`Unsubscribing from all tokens`));
 	};
 
+	handleSlider = value => {
+		console.log(`Filtering transactions by minimum value ${value}`);
+		this.setState({ minValue: value });
+		this.props.dispatch(setMinValue(value));
+	};
+
 	async componentDidMount() {
 		//await so that we don't try to subscribe to tokens before retrieving them
 		await this.props.dispatch(fetchTopTokens());
@@ -82,6 +108,16 @@ class TokenSelector extends Component {
 						);
 					})}
 					<div className="panel-block">
+						<p>Minimum Transaction Value ${this.state.minValue}</p>
+						<Slider
+							defaultValue={0}
+							min={0}
+							max={10000}
+							handle={handle}
+							onChange={this.handleSlider}
+						/>
+					</div>
+					<div className="panel-block">
 						<a
 							className="button is-link is-outlined is-fullwidth"
 							onClick={this.checkAll}
@@ -104,7 +140,7 @@ class TokenSelector extends Component {
 function mapStateToProps(state) {
 	return {
 		tokens: state.tokens,
-		subscriptions: state.subscriptions
+		settings: state.settings
 	};
 }
 
