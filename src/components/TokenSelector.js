@@ -93,7 +93,7 @@ class TokenSelector extends Component {
 					<p className="panel-heading">Top 10 ERC20 tokens by market cap</p>
 					{this.props.tokens.map(token => {
 						return (
-							<label className="panel-block is-active" key={token.symbol}>
+							<label className="panel-block is-outlined" key={token.symbol}>
 								<input
 									type="checkbox"
 									checked={this.state.checked[token.symbol] ? 'checked' : ''}
@@ -103,20 +103,10 @@ class TokenSelector extends Component {
 								<span className="panel-icon">
 									<i className="fas fa-book" aria-hidden="true" />
 								</span>
-								{token.symbol}
+								{token.symbol} - {token.name}
 							</label>
 						);
 					})}
-					<div className="panel-block">
-						<p>Minimum Transaction Value ${this.state.minValue}</p>
-						<Slider
-							defaultValue={0}
-							min={0}
-							max={10000}
-							handle={handle}
-							onChange={this.handleSlider}
-						/>
-					</div>
 					<div className="panel-block">
 						<a
 							className="button is-link is-outlined is-fullwidth"
@@ -130,6 +120,22 @@ class TokenSelector extends Component {
 						>
 							Uncheck All
 						</a>
+					</div>
+				</nav>
+				<nav class="level">
+					<div className="level-item has-text-centered">
+						Minimum Transaction Value ${this.state.minValue}
+					</div>
+				</nav>
+				<nav class="level">
+					<div className="level-item has-text-centered">
+						<Slider
+							defaultValue={0}
+							min={0}
+							max={10000}
+							handle={handle}
+							onChange={this.handleSlider}
+						/>
 					</div>
 				</nav>
 			</div>

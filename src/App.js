@@ -9,33 +9,26 @@ import TokenStatus from './components/TokenStatus';
 //import { blockDateTime } from './components/helpers';
 
 class App extends Component {
-	componentWillUnmount() {
-		//this.blockSubscription.unsubscribe();
-	}
-
-	getBlockTime = block => {
-		//console.log(`getBlockTime called block=${block}`);
-		/*
-    if (this.blockTimes.has(block)) {
-			let timeStr = blockDateTime(this.blockTimes.get(block));
-			return timeStr;
-    }
-    */
-		return 'use the Date class';
-	};
-
 	render() {
 		return (
 			<div className="container is-fluid">
-				<div className="notification is-info">
-					<TokenStatus />
-				</div>
+				<section class="hero is-medium has-text-black is-light is-bold">
+					<div class="hero-body has-text-centered">
+						<div class="container">
+							<h1 class="title">ERC20 Tracker</h1>
+							<h2 class="subtitle">Keep An Eye On ERC20 Token Transfers</h2>
+						</div>
+					</div>
+				</section>
+				<TokenStatus />
 				<div className="columns">
 					<div className="column is-one-quarter">
 						<TokenSelector />
 					</div>
-					<div className="column is-three-quarters">
-						<TokenEventsTable getBlockTime={this.getBlockTime} />
+					<div className="column">
+						<div className="container is-fluid">
+							<TokenEventsTable />
+						</div>
 					</div>
 				</div>
 			</div>

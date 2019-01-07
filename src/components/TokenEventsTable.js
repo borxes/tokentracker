@@ -10,7 +10,6 @@ class TokenEventsTable extends Component {
 				<table className="table is-bordered is-striped">
 					<thead>
 						<tr>
-							<th>Token</th>
 							<th>Type</th>
 							<th>Hash</th>
 							<th>From</th>
@@ -33,6 +32,8 @@ class TokenEventsTable extends Component {
 								);
 								const usdValue = token.price.rate * tokenAmount;
 								return (
+									// we show logged transaction even after token was unsubscribed
+									//token.subscription.id &&
 									usdValue >= this.props.minDisplayValue && (
 										<TokenEvent
 											transaction={transaction}

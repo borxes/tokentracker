@@ -1,6 +1,7 @@
 import axios from 'axios';
 import erc20ABI from '../abi/erc20ABI.js';
 import web3 from '../web3';
+import { toast } from 'react-toastify';
 
 const ETHPLORER_URL = 'https://api.ethplorer.io';
 const API_KEY = '?apiKey=freekey';
@@ -129,6 +130,10 @@ export function addTransaction(transaction) {
 }
 
 export function setStatus(status) {
+	toast.info(status, {
+		position: toast.POSITION.BOTTOM_RIGHT
+	});
+
 	return {
 		type: SET_STATUS,
 		payload: status

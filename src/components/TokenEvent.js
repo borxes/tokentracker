@@ -6,7 +6,6 @@ export default class TokenEvent extends Component {
 		const transaction = this.props.transaction;
 		return (
 			<tr>
-				<td>{transaction.tokenSymbol}</td>
 				<td>{transaction.event}</td>
 				<td>{createEtherscanLink(transaction.transactionHash)}</td>
 				<td>
@@ -21,7 +20,9 @@ export default class TokenEvent extends Component {
 						: ''}
 					...
 				</td>
-				<td>{this.props.tokenAmount}</td>
+				<td>
+					{this.props.tokenAmount} {transaction.tokenSymbol}
+				</td>
 				<td>${this.props.usdValue}</td>
 				<td>
 					<a href={`https://etherscan.io/block/${transaction.blockNumber}`}>
