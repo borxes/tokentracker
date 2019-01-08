@@ -2,9 +2,10 @@ import axios from 'axios';
 import erc20ABI from '../abi/erc20ABI.js';
 import web3 from '../web3';
 import { toast } from 'react-toastify';
+import { ETHPLORER_API_KEY } from '../env.js';
 
 const ETHPLORER_URL = 'https://api.ethplorer.io';
-const API_KEY = '?apiKey=freekey';
+const API_KEY = /*'?apiKey=freekey'*/ `?apiKey=${ETHPLORER_API_KEY}`;
 const TOKEN_LIMIT = 10;
 //export const LOCAL_SUB_KEY = 'store_subs';
 
