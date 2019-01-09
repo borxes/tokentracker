@@ -26,7 +26,7 @@ class App extends Component {
 						</div>
 					</div>
 				</section>
-				<div class="notification has-text-centered">
+				<div className="notification has-text-centered">
 					ERC20 Tracker lets you watch token transfers{' '}
 					<strong>in real time</strong> as they take place on the Ethereum
 					blockchain.
