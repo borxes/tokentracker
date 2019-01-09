@@ -27,8 +27,9 @@ class App extends Component {
 					</div>
 				</section>
 				<div class="notification has-text-centered">
-					ERC20 Tracker lets you watch token transfers in real time as they take
-					place on the Ethereum blockchain.
+					ERC20 Tracker lets you watch token transfers{' '}
+					<strong>in real time</strong> as they take place on the Ethereum
+					blockchain.
 					<br /> At the moment you can subscribe to any of the top 10 tokens by
 					market cap and filter the token transfers by minimum USD value.
 				</div>
