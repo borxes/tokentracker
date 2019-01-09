@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { ETHPLORER_API_KEY } from '../env.js';
 
 const ETHPLORER_URL = 'https://api.ethplorer.io';
-const API_KEY = /*'?apiKey=freekey'*/ `?apiKey=${ETHPLORER_API_KEY}`;
+const API_KEY = '?apiKey=freekey'; /*`?apiKey=${ETHPLORER_API_KEY}`*/
 const TOKEN_LIMIT = 10;
 //export const LOCAL_SUB_KEY = 'store_subs';
 
@@ -71,7 +71,7 @@ export const addSub = (tokenSymbol, tokenState) => dispatch => {
 				event.tokenSymbol = tokenSymbol;
 				const timeStamp = new Date(Date.now());
 				event.timeStamp = timeStamp.toString().split(' ')[4]; // just the time
-				dispatch(setStatus(`adding Transaction hash ${event.transactionHash}`));
+				//dispatch(setStatus(`adding Transaction hash ${event.transactionHash}`));
 				dispatch(addTransaction(event));
 			}
 			if (error) {
@@ -132,7 +132,8 @@ export function addTransaction(transaction) {
 
 export function setStatus(status) {
 	toast.info(status, {
-		position: toast.POSITION.BOTTOM_RIGHT
+		position: toast.POSITION.BOTTOM_RIGHT,
+		className: 'has-text-white center'
 	});
 
 	return {

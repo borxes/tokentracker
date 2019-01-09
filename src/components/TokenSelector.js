@@ -108,12 +108,14 @@ class TokenSelector extends Component {
 						);
 					})}
 					<div className="panel-block">
+						{/* eslint-disable-next-line*/}
 						<a
 							className="button is-link is-outlined is-fullwidth"
 							onClick={this.checkAll}
 						>
 							Check All
 						</a>
+						{/* eslint-disable-next-line*/}
 						<a
 							className="button is-link is-outlined is-fullwidth"
 							onClick={this.unCheckAll}
@@ -122,12 +124,12 @@ class TokenSelector extends Component {
 						</a>
 					</div>
 				</nav>
-				<nav class="level">
+				<nav className="level">
 					<div className="level-item has-text-centered">
-						Minimum Transaction Value ${this.state.minValue}
+						Filter by Minimum Transaction Value: ${this.state.minValue}
 					</div>
 				</nav>
-				<nav class="level">
+				<nav className="level">
 					<div className="level-item has-text-centered">
 						<Slider
 							defaultValue={0}
