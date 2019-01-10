@@ -66,7 +66,7 @@ export const addSub = (tokenSymbol, tokenState) => dispatch => {
 	if (token && !token.subscribed) {
 		const tokenContract = new web3.eth.Contract(erc20ABI, token.address);
 		console.log(`subscribing to ${token.symbol}`);
-		const sub = tokenContract.events.allEvents((error, event) => {
+		const sub = tokenContract.events.Transfer((error, event) => {
 			if (event) {
 				event.tokenSymbol = tokenSymbol;
 				const timeStamp = new Date(Date.now());
