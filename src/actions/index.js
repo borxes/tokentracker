@@ -41,7 +41,7 @@ export function addTokens(tokens) {
 	});
 	return {
 		type: ADD_TOKENS,
-		payload: tokens
+		payload: tokens,
 	};
 }
 
@@ -52,7 +52,7 @@ export const fetchTopTokens = () => async dispatch => {
 
 	dispatch({
 		type: ADD_TOKENS,
-		payload: response.data.tokens.slice(1) // we ignore the first token which is always ETH
+		payload: response.data.tokens.slice(1), // we ignore the first token which is always ETH
 	});
 
 	dispatch(setStatus('Top 10 tokens retrieved'));
@@ -66,24 +66,32 @@ export const addSub = (tokenSymbol, tokenState) => dispatch => {
 	if (token && !token.subscribed) {
 		const tokenContract = new web3.eth.Contract(erc20ABI, token.address);
 		console.log(`subscribing to ${token.symbol}`);
-		const sub = tokenContract.events.Transfer((error, event) => {
-			if (event) {
-				event.tokenSymbol = tokenSymbol;
-				const timeStamp = new Date(Date.now());
-				event.timeStamp = timeStamp.toString().split(' ')[4]; // just the time
-				//dispatch(setStatus(`adding Transaction hash ${event.transactionHash}`));
-				dispatch(addTransaction(event));
-			}
-			if (error) {
-				dispatch(setStatus(`${tokenSymbol} subscription error ${error}`));
-			}
+		tokenContract.once('Transfer', { fromBlock: 0 }, (err, event) => {
+			console.log(event);
 		});
+		const sub = tokenContract.events.Transfer(
+			{
+				fromBlock: 'latest',
+			},
+			(error, event) => {
+				if (event) {
+					event.tokenSymbol = tokenSymbol;
+					const timeStamp = new Date(Date.now());
+					event.timeStamp = timeStamp.toString().split(' ')[4]; // just the time
+					//dispatch(setStatus(`adding Transaction hash ${event.transactionHash}`));
+					dispatch(addTransaction(event));
+				}
+				if (error) {
+					dispatch(setStatus(`${tokenSymbol} subscription error ${error}`));
+				}
+			}
+		);
 		dispatch({
 			type: ADD_SUB,
 			payload: {
 				token: tokenSymbol,
-				sub: sub
-			}
+				sub: sub,
+			},
 		});
 		/* local Storage is buggy atm
 		let localSubs = JSON.parse(localStorage.getItem(LOCAL_SUB_KEY)) || [];
@@ -109,7 +117,7 @@ export const removeSub = (tokenSymbol, tokenState) => dispatch => {
 					console.log(`unsubscribed from ${token.symbol}`);
 					return {
 						type: REMOVE_SUB,
-						payload: token
+						payload: token,
 					};
 				}
 				if (error) {
@@ -126,25 +134,25 @@ export const removeSub = (tokenSymbol, tokenState) => dispatch => {
 export function addTransaction(transaction) {
 	return {
 		type: ADD_TRANSACTION,
-		payload: transaction
+		payload: transaction,
 	};
 }
 
 export function setStatus(status) {
 	toast.info(status, {
 		position: toast.POSITION.BOTTOM_RIGHT,
-		className: 'has-text-white center'
+		className: 'has-text-white center',
 	});
 
 	return {
 		type: SET_STATUS,
-		payload: status
+		payload: status,
 	};
 }
 
 export function setMinValue(value) {
 	return {
 		type: SET_MIN_VAL,
-		payload: value
+		payload: value,
 	};
 }
